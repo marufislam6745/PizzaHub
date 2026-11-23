@@ -3,9 +3,11 @@ import { createMenu } from "@/lib/action/item";
 import { authClient } from "@/lib/auth-client";
 import { IPizza } from "@/type";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddMenuItemPage() {
-
+    const router = useRouter()
     const { data: session } = authClient.useSession()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,9 +26,10 @@ export default function AddMenuItemPage() {
         const result = await createMenu(itemdata as IPizza)
 
         if (result) {
-            console.log('Post a New item successfully')
+            toast.success('Post a New item successfully')
+            router.push('/dashboard/vendor/manage-menu')
         } else {
-            console.log(result.message || 'Something error!')
+            toast.error(result.message || 'Something error!')
         }
 
     }

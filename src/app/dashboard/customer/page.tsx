@@ -227,9 +227,9 @@ const CustomerDashboardPage = async () => {
                                                 </td>
 
                                                 <td className="px-6 py-5">
-                                                    <span className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold capitalize ${status === 'accepted'
+                                                    <span className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold capitalize ${status === 'accept'
                                                         ? 'bg-green-100 text-green-600'
-                                                        : status === 'rejected'
+                                                        : status === 'reject'
                                                             ? 'bg-red-50 text-red-600'
                                                             : 'bg-yellow-50 text-yellow-600'
                                                         }`}>

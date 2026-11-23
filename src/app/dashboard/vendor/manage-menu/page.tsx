@@ -3,7 +3,8 @@ import { IPizza } from '@/type';
 import { headers } from 'next/headers';
 import Image from 'next/image';
 import React from 'react';
-import { Pizza, Trash2, UtensilsCrossed, LocateIcon } from "lucide-react";
+import { Pizza, UtensilsCrossed, LocateIcon } from "lucide-react";
+import DeleteMenu from '@/components/DeleteMenu';
 
 
 const ManageMenuPage = async () => {
@@ -57,7 +58,7 @@ const ManageMenuPage = async () => {
                     <div className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm">
                         <p className="text-sm text-gray-500">Available Items</p>
                         <h3 className="mt-2 text-3xl font-bold text-green-600">
-                            {myitem.filter(item => item.status === "Approved").length}
+                            {myitem.filter(item => item.status === "active").length}
                         </h3>
                     </div>
 
@@ -135,19 +136,14 @@ const ManageMenuPage = async () => {
                                     {/* Status and Action */}
                                     <div className="flex items-center justify-between gap-3 border-t border-gray-100 pt-3 sm:border-0 sm:pt-0">
 
-                                        <button className={`rounded-lg px-4 py-2.5 text-sm font-semibold ${pizza.status === "Approved"
+                                        <button className={`rounded-lg px-4 py-2.5 text-sm font-semibold ${pizza.status === "active"
                                             ? "bg-green-50 text-green-600"
                                             : "bg-orange-50 text-orange-500"
                                             }`}>
                                             {pizza.status}
                                         </button>
 
-                                        <button
-                                            className="flex items-center gap-2 rounded-lg border border-red-100 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-500 transition hover:bg-red-500 hover:text-white"
-                                        >
-                                            <Trash2 size={16} />
-                                            Delete
-                                        </button>
+                                        <DeleteMenu pizza={pizza}></DeleteMenu>
 
                                     </div>
                                 </div>

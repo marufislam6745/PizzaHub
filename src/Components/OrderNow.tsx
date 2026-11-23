@@ -77,13 +77,14 @@ const OrderNow = ({ item }: { item: IPizza }) => {
             if (res) {
                 toast.success('Order successfully')
                 setIsConfirmed(true);
+                router.push('/dashboard/customer/myorder')
             }
         }
         else {
             toast.error('user is not a Customer')
         }
         // এখানে প্রয়োজনে API কল বা স্টেট আপডেট যুক্ত করতে পারেন
-        console.log('Order Confirmed:', orderPreview);
+        // console.log('Order Confirmed:', orderPreview);
         
     };
 

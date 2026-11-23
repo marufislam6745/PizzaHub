@@ -1,7 +1,8 @@
 
+import MyorderCancel from '@/components/MyorderCancel';
 import { auth } from '@/lib/auth';
 import { IOrder } from '@/type';
-import { CalendarDays, ShoppingBag, XCircle } from 'lucide-react';
+import { CalendarDays, ShoppingBag } from 'lucide-react';
 import { headers } from 'next/headers';
 import Image from 'next/image';
 import React from 'react';
@@ -100,10 +101,7 @@ const MyOrderPage = async () => {
                                                     Pending
                                                 </span>
 
-                                                <button className="flex items-center gap-2 rounded-lg bg-red-50 px-4 py-2 text-sm font-semibold text-red-500 transition hover:bg-red-500 hover:text-white">
-                                                    <XCircle size={16} />
-                                                    Cancel
-                                                </button>
+                                                <MyorderCancel pizza={pizza}></MyorderCancel>
                                             </div>
                                         ) : (
                                             <span className={`rounded-full px-4 py-2 text-sm font-semibold capitalize ${pizza.status === 'accepted'
