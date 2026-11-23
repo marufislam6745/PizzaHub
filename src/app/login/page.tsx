@@ -1,11 +1,30 @@
-
+'use client'
 import Link from "next/link";
 import { Mail, LockKeyhole } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
 
 
 
 export default function LoginPage() {
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const userdata = Object.fromEntries(formData.entries()) as { email: string, password: string }
+        //console.log(userdata)
+        const { data, error } = await authClient.signIn.email({
+            ...userdata,
+            callbackURL: '/',
+        })
+        if (data) {
+            console.log('Login  successfully')
+        }
+        if (error) {
+            console.log(error.message || 'Something error!')
+        }
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-red-50">
 
@@ -22,7 +41,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Sign In Form */}
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5">
 
                     {/* Email */}
                     <div>
@@ -33,6 +52,7 @@ export default function LoginPage() {
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Enter your email"
                                 required
                                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition"
@@ -49,6 +69,7 @@ export default function LoginPage() {
                             <LockKeyhole className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input
                                 type="password"
+                                name="password"
                                 placeholder="Enter your password"
                                 required
                                 className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 transition"

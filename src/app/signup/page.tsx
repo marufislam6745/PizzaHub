@@ -3,8 +3,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { User, Mail, LockKeyhole, Eye, EyeOff } from "lucide-react";
-import {FcGoogle} from "react-icons/fc";
+import { User, Mail, LockKeyhole, Eye, EyeOff, BadgeCheck } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 
 
@@ -12,13 +14,27 @@ export default function SignupPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [role, setRole] = useState("customer");
+    const router=useRouter()
 
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget)
-        const userdata = Object.fromEntries(formData.entries())
-        console.log(userdata)
+        const userdata = Object.fromEntries(formData.entries()) as { name: string, email: string, password: string, role: string }
+        //console.log(userdata)
+        const { data, error } = await authClient.signUp.email({
+            ...userdata,
+            callbackURL: "/"
+        })
+        if (data) {
+            console.log('Account create successfully')
+            router.push('/')
+        }
+        if (error) {
+            console.log(error.message || 'Something error!')
+        }
+
 
         // Password validation
         if (password.length < 6) {
@@ -98,6 +114,28 @@ export default function SignupPage() {
                         </div>
                     </div>
 
+                    {/* Role*/}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Select Your Role
+                        </label>
+
+                        <div className="relative">
+                            <BadgeCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                            <select
+                                name="role"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                                required
+                            >
+                                <option value="customer">Customer</option>
+                                <option value="vendor">Vendor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+
                     {/* Password */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -165,7 +203,7 @@ export default function SignupPage() {
                     type="button"
                     className="flex items-center justify-center gap-3 w-full border border-gray-300 hover:bg-gray-50 py-3 rounded-xl font-medium text-gray-700 transition"
                 >
-                    <FcGoogle size={24}/>    Continue with Google
+                    <FcGoogle size={24} />    Continue with Google
                 </button>
 
                 {/* Sign In */}

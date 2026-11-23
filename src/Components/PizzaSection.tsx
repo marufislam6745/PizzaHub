@@ -2,11 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { MapPin, Star, ArrowUpRight } from "lucide-react";
+import { IPizza } from '@/type';
 
 
 const PizzaSection = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizzaSection`)
-    const data = await res.json()
+    const data:IPizza[] = await res.json()
 
     return (
         <div className="max-w-7xl mx-auto py-16 px-4 md:px-8 lg:px-12">

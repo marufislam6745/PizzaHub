@@ -1,27 +1,3 @@
-// import Image from 'next/image';
-// import React from 'react';
-
-// const Subscribe = () => {
-//     return (
-//         <div>
-//             <div>
-//                 <Image src={'/pizza.jpg'} alt='pizza' width={400} height={500}></Image>
-//             </div>
-//             <div>
-//                 <h2 className="text-2xl sm:text-3xl font-bold">
-//                     Get 20% Off Your First Order!
-//                 </h2>
-//                 <p className="text-red-100 mt-2 text-sm">
-//                     Subscribe to get special offers and exclusive deals.
-//                 </p>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Subscribe; 
-
-
 
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";

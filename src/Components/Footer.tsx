@@ -16,33 +16,6 @@ import { FaXTwitter } from "react-icons/fa6";
 export default function Footer() {
     return (
         <footer className="bg-[#171717] text-white">
-            {/* Newsletter
-            <div className="bg-red-600">
-                <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div>
-                        <h2 className="text-2xl sm:text-3xl font-bold">
-                            Get 20% Off Your First Order!
-                        </h2>
-                        <p className="text-red-100 mt-2 text-sm">
-                            Subscribe to get special offers and exclusive deals.
-                        </p>
-                    </div>
-
-                    <form className="flex w-full md:w-105 bg-white rounded-full p-1.5">
-                        <input
-                            type="email"
-                            placeholder="Enter your email address"
-                            className="w-full min-w-0 px-4 text-gray-700 outline-none rounded-full text-sm"
-                        />
-                        <button
-                            type="submit"
-                            className="bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-full text-sm font-semibold flex items-center gap-2 shrink-0 transition"
-                        >
-                            Subscribe <ArrowRight size={16} />
-                        </button>
-                    </form>
-                </div>
-            </div> */}
 
             {/* Main Footer */}
             <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">

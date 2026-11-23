@@ -1,6 +1,7 @@
-import Banner from "@/Components/Banner";
-import PizzaSection from "@/Components/PizzaSection";
-import Subscribe from "@/Components/Subscribe";
+import Banner from "@/components/Banner";
+import Footer from "@/components/Footer";
+import PizzaSection from "@/components/PizzaSection";
+import Subscribe from "@/components/Subscribe";
 
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Banner></Banner>
       <PizzaSection></PizzaSection>
       <Subscribe></Subscribe>
+      <Footer></Footer>
     </div>
   );
 }
