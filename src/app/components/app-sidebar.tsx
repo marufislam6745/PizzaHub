@@ -47,7 +47,7 @@ const menuItemByRole: Record<UserRole, MenuItem[]> = {
         },
         {
             name: "My Orders",
-            url: "/dashboard/customer/#",
+            url: "/dashboard/customer/myorder",
             icon: Search,
         },
         {

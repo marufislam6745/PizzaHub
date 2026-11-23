@@ -1,19 +1,31 @@
 'use client'
+import { orderItem } from '@/lib/action/item';
+import { authClient } from '@/lib/auth-client';
 import { IPizza } from '@/type';
 import { X, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 
-interface IOrderPreview {
+export interface IOrderPreview {
+    itemId: string,
     title: string;
     price: number;
+    image:string,
     deliveryDate: string;
     address: string;
     orderedAt: string;
+    status: string,
+    vendorId: string,
+    vendoremail: string,
+    userId: string,
+    useremail: string,
+    category:string
 }
 
 const OrderNow = ({ item }: { item: IPizza }) => {
-
+    const router = useRouter()
     const [orderPreview, setOrderPreview] = useState<IOrderPreview | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isConfirmed, setIsConfirmed] = useState(false);
@@ -31,25 +43,50 @@ const OrderNow = ({ item }: { item: IPizza }) => {
             hour: '2-digit',
             minute: '2-digit',
         });
+
         setOrderPreview({
+            itemId: item._id,
             title: item.title,
+            image:item.image,
             price: item.price,
+            category:item.category,
             deliveryDate: String(orderdata.deliveryDate || ''),
             address: String(orderdata.address || ''),
             orderedAt,
+            vendorId: item.vendorId,
+            vendoremail: item.email,
+            status: "pending",
+            userId: session?.user.id || '',
+            useremail: session?.user.email || '',
         });
 
         setIsConfirmed(false);
         setIsModalOpen(true);
     }
 
+    const { data: session } = authClient.useSession()
+
     const handleConfirmOrder = async () => {
         if (!orderPreview) return;
 
+        if (!session?.user) {
+            router.push(`/login?redirectTo=/restaurants/${item._id}`)
+        }
+        else if ((session?.user as { role?: string })?.role === "customer") {
+            const res = await orderItem(orderPreview)
+            if (res) {
+                toast.success('Order successfully')
+                setIsConfirmed(true);
+            }
+        }
+        else {
+            toast.error('user is not a Customer')
+        }
         // এখানে প্রয়োজনে API কল বা স্টেট আপডেট যুক্ত করতে পারেন
         console.log('Order Confirmed:', orderPreview);
-        setIsConfirmed(true);
+        
     };
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setIsConfirmed(false);
