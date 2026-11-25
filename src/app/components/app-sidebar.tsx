@@ -101,12 +101,12 @@ const menuItemByRole: Record<UserRole, MenuItem[]> = {
         },
         {
             name: "Manage Users",
-            url: "/dashboard/admin/#",
+            url: "/dashboard/admin/manage-user",
             icon: UserCog,
         },
         {
             name: "Manage Menu Items",
-            url: "/dashboard/admin/#",
+            url: "/dashboard/admin/manage-menu",
             icon: BriefcaseBusiness,
         },
         {

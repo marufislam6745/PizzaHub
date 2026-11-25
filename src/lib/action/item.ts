@@ -18,6 +18,11 @@ export const getAllPizza = async (query: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza?${query}`)
     return res.json()
 }
+//get all active item 
+export const getActivePizza = async (query: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activepizza?${query}`)
+    return res.json()
+}
 
 //Delete menu item by vendor
 export const deleteMenu = async (id: string) => {
@@ -60,5 +65,23 @@ export const updateOrderStatus = async (id: string, data: { status: string }) =>
         },
         body: JSON.stringify(data)
     })
+    return res.json()
+}
+
+//update menu status
+export const updateMenuStatus = async (id: string, data: { status: string }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${id}`, {
+        method: "PATCH",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return res.json()
+}
+
+//get all users
+export const getAllUsers = async (query: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users?${query}`)
     return res.json()
 }

@@ -1,5 +1,5 @@
 import FilterCategory from '@/components/FilterCategory';
-import { getAllPizza } from '@/lib/action/item';
+import { getActivePizza } from '@/lib/action/item';
 import { IPizza } from '@/type';
 import { ArrowUpRight, MapPin, Star } from 'lucide-react';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ const RestaurantMenuPage = async ({ searchParams }: { searchParams: Promise<{ [k
     const search = await searchParams;
     const urlSearch = new URLSearchParams(search as Record<string, string>).toString();
 
-    const item: IPizza[] = await getAllPizza(urlSearch)
+    const item: IPizza[] = await getActivePizza(urlSearch)
 
     return (
         <section className="w-full px-3 py-5 sm:px-6 lg:px-10">
