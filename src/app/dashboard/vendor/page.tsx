@@ -1,4 +1,5 @@
 
+import { customerOrder } from "@/lib/action/item";
 import { auth } from "@/lib/auth";
 import { IPizza } from "@/type";
 import {
@@ -12,7 +13,12 @@ import {
 } from "lucide-react";
 import { headers } from "next/headers";
 
-
+interface OrderItem {
+    title: string,
+    status: 'accept' | 'pending',
+    description: string,
+    icon: string
+}
 
 export default async function VendorDashboard() {
 
@@ -27,6 +33,15 @@ export default async function VendorDashboard() {
     const activeMenuItems = myitem.filter(
         (item) => item.status === "active"
     ).length;
+
+     const order = await customerOrder(session?.user.id || '')
+    const pendingorderItems = order.filter(
+        (item:OrderItem) => item.status === "pending"
+    ).length;
+    const acceptorderItems = order.filter(
+        (item:OrderItem) => item.status === "accept"
+    ).length;
+  
 
     const stats = [
         {
@@ -45,14 +60,14 @@ export default async function VendorDashboard() {
         },
         {
             title: "Pending Orders",
-            value: "18",
+            value: pendingorderItems,
             description: "Waiting for confirmation",
             icon: Clock,
             color: "bg-yellow-100 text-yellow-600",
         },
         {
             title: "Accepted Orders",
-            value: "124",
+            value: acceptorderItems,
             description: "Successfully accepted",
             icon: CheckCircle,
             color: "bg-blue-100 text-blue-600",

@@ -104,9 +104,9 @@ const MyOrderPage = async () => {
                                                 <MyorderCancel pizza={pizza}></MyorderCancel>
                                             </div>
                                         ) : (
-                                            <span className={`rounded-full px-4 py-2 text-sm font-semibold capitalize ${pizza.status === 'accepted'
+                                            <span className={`rounded-full px-4 py-2 text-sm font-semibold capitalize ${pizza.status === 'accept'
                                                     ? 'bg-green-100 text-green-600'
-                                                    : pizza.status === 'rejected'
+                                                    : pizza.status === 'reject'
                                                         ? 'bg-red-50 text-red-600'
                                                         : 'bg-gray-100 text-gray-600'
                                                 }`}>

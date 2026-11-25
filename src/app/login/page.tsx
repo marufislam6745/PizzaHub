@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Mail, LockKeyhole } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 
 
@@ -18,10 +19,10 @@ export default function LoginPage() {
             callbackURL: '/',
         })
         if (data) {
-            console.log('Login  successfully')
+            toast.success('Login  successfully')
         }
         if (error) {
-            console.log(error.message || 'Something error!')
+            toast.error(error.message || 'Something error!')
         }
     }
 

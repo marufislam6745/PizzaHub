@@ -77,12 +77,12 @@ const menuItemByRole: Record<UserRole, MenuItem[]> = {
         },
         {
             name: "Customer Orders",
-            url: "/dashboard/vendor/#",
+            url: "/dashboard/vendor/customerOrder",
             icon: Users,
         },
         {
             name: "Subscription",
-            url: "/dashboard/vendor/#",
+            url: "/dashboard/vendor/subscription",
             icon: Building2,
         },
         {

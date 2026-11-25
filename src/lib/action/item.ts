@@ -45,3 +45,20 @@ export const cancelOrder = async (id: string) => {
     })
     return res.json()
 }
+
+//vendor with customer order 
+export const customerOrder = async (id: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vendorOrder/${id}`)
+    return res.json()
+}
+
+export const updateOrderStatus = async (id: string, data: { status: string }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vendorOrder/${id}`, {
+        method: "PATCH",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return res.json()
+}

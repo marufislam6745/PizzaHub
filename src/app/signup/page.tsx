@@ -7,6 +7,7 @@ import { User, Mail, LockKeyhole, Eye, EyeOff, BadgeCheck } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 
@@ -28,11 +29,11 @@ export default function SignupPage() {
             callbackURL: "/"
         })
         if (data) {
-            console.log('Account create successfully')
+            toast.success('Account create successfully')
             router.push('/')
         }
         if (error) {
-            console.log(error.message || 'Something error!')
+            toast.error(error.message || 'Something error!')
         }
 
 

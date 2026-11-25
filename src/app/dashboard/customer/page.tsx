@@ -58,10 +58,10 @@ const CustomerDashboardPage = async () => {
         (order) => order.status?.toLowerCase() === 'pending'
     ).length;
     const acceptedOrders = orders.filter(
-        (order) => order.status?.toLowerCase() === 'accepted'
+        (order) => order.status?.toLowerCase() === 'accept'
     ).length;
     const rejectedOrders = orders.filter(
-        (order) => order.status?.toLowerCase() === 'rejected'
+        (order) => order.status?.toLowerCase() === 'reject'
     ).length;
 
     const stats = [
