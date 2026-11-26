@@ -40,7 +40,7 @@ export default async function BrandSubscriptionPage({ searchParams }: { searchPa
                 {/* Back Button */}
 
                 <Link
-                    href="/"
+                    href="/dashboard/vendor/subscription"
                     className="inline-flex items-center gap-2 text-gray-500 hover:text-orange-500 transition mb-10"
                 >
                     <ArrowLeft size={18} />

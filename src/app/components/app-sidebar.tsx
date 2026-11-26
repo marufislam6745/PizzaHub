@@ -111,7 +111,7 @@ const menuItemByRole: Record<UserRole, MenuItem[]> = {
         },
         {
             name: "Transactions",
-            url: "/dashboard/admin",
+            url: "/dashboard/admin/transactions",
             icon: BarChart3,
         },
     ],

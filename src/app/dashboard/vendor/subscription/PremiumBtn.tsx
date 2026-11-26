@@ -4,7 +4,12 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
 
-const PremiumBtn = ({ user }) => {
+interface UserType {
+    _id: string,
+    premium: boolean
+}
+
+const PremiumBtn = ({ user }: { user: UserType }) => {
 
     const router = useRouter()
 

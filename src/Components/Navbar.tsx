@@ -113,13 +113,13 @@ export default function Navbar() {
 
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer text-base flex items-center">
-                                           <MdLogout /> Log out
+                                            <MdLogout /> Log out
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             :
-                            <div className="hidden md:block">
+                            <div>
                                 <Link
                                     href="/login"
                                     className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold transition duration-300 shadow-sm"
@@ -165,14 +165,70 @@ export default function Navbar() {
                                 Restaurant Menu
                             </Link>
 
-                            <Link
-                                href="/login"
-                                onClick={() => setIsOpen(false)}
-                                className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-lg font-semibold transition"
-                            >
-                                <LogIn size={18} />
-                                Login
-                            </Link>
+                            {
+                                session?.user ?
+
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger render={
+                                            <Button variant="ghost" className="rounded-full p-1">
+                                                <Avatar>
+                                                    <AvatarFallback>
+                                                        {session?.user?.name?.charAt(0)?.toUpperCase() || "U"}
+                                                    </AvatarFallback>
+                                                    <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+                                                </Avatar>
+                                            </Button>
+                                        } />
+
+                                        <DropdownMenuContent className="w-64 bg-white text-black" align="end">
+
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuLabel className="font-bold text-base">
+                                                    {session?.user?.name}
+                                                </DropdownMenuLabel>
+
+                                                <DropdownMenuLabel className="text-gray-500 font-normal text-xs">
+                                                    {session?.user?.email}
+                                                </DropdownMenuLabel>
+
+                                            </DropdownMenuGroup>
+
+                                            <DropdownMenuSeparator />
+
+                                            <DropdownMenuGroup>
+
+                                                <Link href={`/dashboard/${(session?.user as { role?: string })?.role}`}>
+                                                    <DropdownMenuLabel className="font-bold text-base">
+                                                        Dashboard
+                                                    </DropdownMenuLabel>
+                                                </Link>
+
+                                                <DropdownMenuLabel className="font-bold text-base">
+                                                    Profile Setting
+                                                </DropdownMenuLabel>
+
+                                            </DropdownMenuGroup>
+
+                                            <DropdownMenuSeparator />
+
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer text-base flex items-center">
+                                                    <MdLogout /> Log out
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                    :
+                                    <div >
+                                        <Link
+                                            href="/login"
+                                            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold transition duration-300 shadow-sm"
+                                        >
+                                            <LogIn size={18} />
+                                            Login
+                                        </Link>
+                                    </div>
+                            }
 
                         </div>
                     </div>

@@ -110,3 +110,9 @@ export const checkoutVerify = async (sessionId: string) => {
     })
     return res.json()
 }
+
+//Transactions details
+export const getTransactions = async (query:string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions?${query}`)
+    return res.json()
+}
