@@ -1,5 +1,6 @@
 'use client'
-import { createMenu } from "@/lib/action/item";
+import { createMenu, getVendorPizzaCount } from "@/lib/action/item";
+import { getPremiumId } from "@/lib/api/premium";
 import { authClient } from "@/lib/auth-client";
 import { IPizza } from "@/type";
 import Link from "next/link";
@@ -15,21 +16,31 @@ export default function AddMenuItemPage() {
         const formData = new FormData(e.currentTarget)
         const item = Object.fromEntries(formData)
 
-        const itemdata = {
-            name: session?.user.name,
-            email: session?.user.email,
-            vendorId: session?.user.id,
-            ...item,
-            status: "pending"
-        }
-        //console.log(itemdata)
-        const result = await createMenu(itemdata as IPizza)
+        const premiumResult = await getPremiumId(session?.user.id || '')
+        //console.log(premiumResult)
 
-        if (result) {
-            toast.success('Post a New item successfully')
-            router.push('/dashboard/vendor/manage-menu')
-        } else {
-            toast.error(result.message || 'Something error!')
+        const countresult = await getVendorPizzaCount(`applicantId=${session?.user.id}`)
+        if (!premiumResult.premium && countresult.count >= 3) {
+            router.push('/checkout')
+            return
+        }
+        else {
+            const itemdata = {
+                name: session?.user.name,
+                email: session?.user.email,
+                vendorId: session?.user.id,
+                ...item,
+                status: "pending"
+            }
+
+            const result = await createMenu(itemdata as IPizza)
+
+            if (result) {
+                toast.success('Post a New item successfully')
+                router.push('/dashboard/vendor/manage-menu')
+            } else {
+                toast.error(result.message || 'Something error!')
+            }
         }
 
     }

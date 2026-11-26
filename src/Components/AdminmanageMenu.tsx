@@ -14,8 +14,9 @@ import {
 } from 'lucide-react';
 
 import { updateMenuStatus } from '@/lib/action/item';
+import AdminDeletemenu from './AdminDeletemenu';
 
-interface Order {
+export interface Order {
     _id: string;
     title?: string;
     image?: string;
@@ -363,7 +364,8 @@ const AdminmanageMenu = ({ initialOrders }: Props) => {
                                                         )}
                                                     </div>
                                                 )}
-                                                <button>Delete</button>
+                                                
+                                                <AdminDeletemenu order={order}></AdminDeletemenu>
                                             </div>
                                         </div>
                                     </div>

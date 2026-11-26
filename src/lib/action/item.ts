@@ -13,6 +13,12 @@ export const createMenu = async (data: IPizza) => {
     return res.json()
 }
 
+//get vendor add pizza count
+export const getVendorPizzaCount = async (query: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/addmenu/count?${query}`)
+    return res.json()
+}
+
 //get all item 
 export const getAllPizza = async (query: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza?${query}`)
@@ -26,6 +32,13 @@ export const getActivePizza = async (query: string) => {
 
 //Delete menu item by vendor
 export const deleteMenu = async (id: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${id}`, {
+        method: "DELETE"
+    })
+    return res.json()
+}
+
+export const adminDeleteMenu = async (id: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${id}`, {
         method: "DELETE"
     })
@@ -83,5 +96,17 @@ export const updateMenuStatus = async (id: string, data: { status: string }) => 
 //get all users
 export const getAllUsers = async (query: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users?${query}`)
+    return res.json()
+}
+
+//payments action
+export const checkoutVerify = async (sessionId: string) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/checkout-verify`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({ sessionId })
+    })
     return res.json()
 }

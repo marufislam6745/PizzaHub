@@ -1,5 +1,6 @@
 
 import { customerOrder } from "@/lib/action/item";
+import { getPremiumId } from "@/lib/api/premium";
 import { auth } from "@/lib/auth";
 import { IPizza } from "@/type";
 import {
@@ -25,6 +26,7 @@ export default async function VendorDashboard() {
     const session = await auth.api.getSession({
         headers: await headers()
     })
+    const user = await getPremiumId(session?.user.id || '')
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${session?.user.email}`);
     const myitem: IPizza[] = await res.json();
@@ -34,14 +36,14 @@ export default async function VendorDashboard() {
         (item) => item.status === "active"
     ).length;
 
-     const order = await customerOrder(session?.user.id || '')
+    const order = await customerOrder(session?.user.id || '')
     const pendingorderItems = order.filter(
-        (item:OrderItem) => item.status === "pending"
+        (item: OrderItem) => item.status === "pending"
     ).length;
     const acceptorderItems = order.filter(
-        (item:OrderItem) => item.status === "accept"
+        (item: OrderItem) => item.status === "accept"
     ).length;
-  
+
 
     const stats = [
         {
@@ -139,48 +141,91 @@ export default async function VendorDashboard() {
                     <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/10"></div>
                     <div className="absolute -bottom-16 right-32 h-40 w-40 rounded-full bg-white/10"></div>
 
-                    <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
+                    {user.premium ?
+                        (<div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
 
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <Crown size={23} />
-                                <span className="text-sm font-semibold uppercase tracking-wider text-orange-500">
-                                    Current Subscription
-                                </span>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Crown size={23} />
+                                    <span className="text-sm font-semibold uppercase tracking-wider text-orange-500">
+                                        Current Subscription
+                                    </span>
+                                </div>
+
+                                <h2 className="mt-3 text-3xl font-bold">
+                                    Premium Plan
+                                </h2>
+
+                                <p className="mt-2 max-w-md text-sm leading-6 text-orange-500">
+                                    Enjoy unlimited menu management, order tracking
+                                    and premium vendor features.
+                                </p>
+
+                                <div className="mt-5 flex flex-wrap gap-3">
+                                    <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
+                                        Unlimited Menu Items
+                                    </span>
+                                    <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
+                                        Priority Support
+                                    </span>
+                                </div>
                             </div>
 
-                            <h2 className="mt-3 text-3xl font-bold">
-                                Premium Plan
-                            </h2>
-
-                            <p className="mt-2 max-w-md text-sm leading-6 text-orange-500">
-                                Enjoy unlimited menu management, order tracking
-                                and premium vendor features.
-                            </p>
-
-                            <div className="mt-5 flex flex-wrap gap-3">
-                                <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
-                                    Unlimited Menu Items
-                                </span>
-                                <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
-                                    Priority Support
-                                </span>
+                            <div className="rounded-xl border border-orange-300 bg-white/10 p-5 backdrop-blur-md md:min-w-52">
+                                <p className="text-sm text-orange-500">
+                                    Subscription Status
+                                </p>
+                                <h3 className="mt-2 text-2xl font-bold">
+                                    Active
+                                </h3>
+                                <p className="mt-2 text-xs text-orange-500">
+                                    Your plan is currently running.
+                                </p>
                             </div>
-                        </div>
 
-                        <div className="rounded-xl border border-orange-300 bg-white/10 p-5 backdrop-blur-md md:min-w-52">
-                            <p className="text-sm text-orange-500">
-                                Subscription Status
-                            </p>
-                            <h3 className="mt-2 text-2xl font-bold">
-                                Active
-                            </h3>
-                            <p className="mt-2 text-xs text-orange-500">
-                                Your plan is currently running.
-                            </p>
-                        </div>
+                        </div>) :
+                        (<div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
 
-                    </div>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm font-semibold uppercase tracking-wider text-orange-500">
+                                        Current Subscription
+                                    </span>
+                                </div>
+
+                                <h2 className="mt-3 text-3xl font-bold">
+                                    Normal User
+                                </h2>
+
+                                <p className="mt-2 max-w-md text-sm leading-6 text-orange-500">
+                                    You can create and access a standard vendor account at no cost.
+                                </p>
+
+                                <div className="mt-5 flex flex-wrap gap-3">
+                                    <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
+                                        Only 3 Menu Items
+                                    </span>
+                                    <span className="rounded-full bg-white/20 px-4 py-2 text-xs font-medium">
+                                        Priority not Support
+                                    </span>
+                                </div>
+                            </div>
+
+                            {user.premium &&
+                                <div className="rounded-xl border border-orange-300 bg-white/10 p-5 backdrop-blur-md md:min-w-52">
+                                    <p className="text-sm text-orange-500">
+                                        Subscription Status
+                                    </p>
+                                    <h3 className="mt-2 text-2xl font-bold">
+                                        Active
+                                    </h3>
+                                    <p className="mt-2 text-xs text-orange-500">
+                                        Your plan is currently running.
+                                    </p>
+                                </div>
+                            }
+
+                        </div>)}
                 </div>
 
                 {/* Quick Overview */}

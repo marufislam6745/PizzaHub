@@ -1,23 +1,20 @@
 
-'use client';
-
-import React, { useState } from 'react';
-import { Check, ArrowRight, Sparkles } from 'lucide-react';
+import React from 'react';
+import { Check, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { getPremiumId } from '@/lib/api/premium';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import PremiumBtn from './PremiumBtn';
 
-const SubscriptionPage = () => {
 
-    const [selectedPlan, setSelectedPlan] = useState('');
 
-    const handleFreePlan = () => {
-        setSelectedPlan('free');
-        console.log('Selected Plan: Free');
-    };
 
-    const handlePremiumPlan = () => {
-        setSelectedPlan('premium');
-        console.log('Selected Plan: Premium');
-    };
+const SubscriptionPage = async () => {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+    const user = await getPremiumId(session?.user.id || "")
 
     return (
         <div className="min-h-screen bg-[#faf8f2] px-4 py-8 md:px-8">
@@ -100,13 +97,9 @@ const SubscriptionPage = () => {
                         {/* Free Button */}
                         <Link href={'/dashboard/vendor/add-menu'}>
                             <button
-                                onClick={handleFreePlan}
-                                className={`mt-7 w-full rounded-lg border px-4 py-3.5 text-xs font-bold transition ${selectedPlan === 'free'
-                                    ? 'border-[#a94335] bg-[#a94335] text-white'
-                                    : 'border-[#d9d5ce] bg-white text-gray-800 hover:bg-gray-50'
-                                    }`}
+                                className={`mt-7 w-full rounded-lg border px-4 py-3.5 text-base font-bold transition border-[#a94335] bg-white text-black`}
                             >
-                                {selectedPlan === 'free' ? "Selected Free Plan ✓" : "Select Free Plan"}
+                                free
                             </button>
                         </Link>
 
@@ -159,19 +152,7 @@ const SubscriptionPage = () => {
                         </div>
 
                         {/* Premium Button */}
-                        <Link href={'#'}>
-                            <button
-                                onClick={handlePremiumPlan}
-                                className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg border border-[#e6a696] bg-[#e6a696] px-4 py-3.5 text-xs font-bold text-[#74382e] transition hover:bg-[#f0b7a8]"
-                            >
-                                {selectedPlan === 'premium'
-                                    ? 'Selected Premium Plan'
-                                    : 'Your`re Premium Plan'
-                                }
-
-                                <ArrowRight size={15} />
-                            </button>
-                        </Link>
+                        <PremiumBtn user={user}></PremiumBtn>
 
                         <p className="mt-3 text-center text-[10px] text-[#f2d0c6]">
                             Demo only. No actual payment is processed.
