@@ -35,6 +35,9 @@ export default async function VendorDashboard() {
     const activeMenuItems = myitem.filter(
         (item) => item.status === "active"
     ).length;
+    const rejectMenuItems = myitem.filter(
+        (item) => item.status === "reject"
+    ).length;
 
     const order = await customerOrder(session?.user.id || '')
     const pendingorderItems = order.filter(
@@ -243,7 +246,7 @@ export default async function VendorDashboard() {
                             <div>
                                 <div className="mb-2 flex justify-between text-sm">
                                     <span className="text-gray-500">Pending Orders</span>
-                                    <span className="font-bold text-yellow-600">18</span>
+                                    <span className="font-bold text-yellow-600">{pendingorderItems}</span>
                                 </div>
                                 <div className="h-2 overflow-hidden rounded-full bg-gray-100">
                                     <div className="h-full w-[35%] rounded-full bg-yellow-400"></div>
@@ -253,7 +256,7 @@ export default async function VendorDashboard() {
                             <div>
                                 <div className="mb-2 flex justify-between text-sm">
                                     <span className="text-gray-500">Accepted Orders</span>
-                                    <span className="font-bold text-green-600">124</span>
+                                    <span className="font-bold text-green-600">{acceptorderItems}</span>
                                 </div>
                                 <div className="h-2 overflow-hidden rounded-full bg-gray-100">
                                     <div className="h-full w-[80%] rounded-full bg-green-500"></div>
@@ -277,14 +280,14 @@ export default async function VendorDashboard() {
                             <div className="space-y-3 text-sm">
                                 <p className="flex items-center gap-2 text-gray-600">
                                     <span className="h-3 w-3 rounded-full bg-orange-500"></span>
-                                    Active Items: 36
+                                    Active Items: {activeMenuItems}
                                 </p>
                                 <p className="flex items-center gap-2 text-gray-600">
                                     <span className="h-3 w-3 rounded-full bg-gray-300"></span>
-                                    Inactive Items: 12
+                                    Inactive Items: {rejectMenuItems }
                                 </p>
                                 <p className="font-semibold text-gray-900">
-                                    Total Items: 48
+                                    Total Items: {totalMenuItems}
                                 </p>
                             </div>
                         </div>

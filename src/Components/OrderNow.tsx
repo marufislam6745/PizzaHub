@@ -74,6 +74,7 @@ const OrderNow = ({ item }: { item: IPizza }) => {
         }
         else if ((session?.user as { role?: string })?.role === "customer") {
             const res = await orderItem(orderPreview)
+            
             if (res) {
                 toast.success('Order successfully')
                 setIsConfirmed(true);

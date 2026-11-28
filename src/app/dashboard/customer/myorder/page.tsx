@@ -1,6 +1,7 @@
 
 import MyorderCancel from '@/components/MyorderCancel';
 import { auth } from '@/lib/auth';
+import { authFetch } from '@/lib/core/server';
 import { IOrder } from '@/type';
 import { CalendarDays, ShoppingBag } from 'lucide-react';
 import { headers } from 'next/headers';
@@ -11,8 +12,8 @@ const MyOrderPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myOrder/${session?.user.email}`);
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/myOrder/${session?.user.email}`
+    const res = await authFetch(api)
     const data = await res.json();
 
     return (
@@ -55,7 +56,7 @@ const MyOrderPage = async () => {
 
                     {/* Order List */}
                     <div className="space-y-4">
-                        {data.map((pizza:IOrder) => (
+                        {data.map((pizza: IOrder) => (
                             <div
                                 key={pizza._id}
                                 className="rounded-xl border border-gray-100 p-2 transition hover:border-orange-200 hover:shadow-md sm:p-3"
@@ -105,10 +106,10 @@ const MyOrderPage = async () => {
                                             </div>
                                         ) : (
                                             <span className={`rounded-full px-4 py-2 text-sm font-semibold capitalize ${pizza.status === 'accept'
-                                                    ? 'bg-green-100 text-green-600'
-                                                    : pizza.status === 'reject'
-                                                        ? 'bg-red-50 text-red-600'
-                                                        : 'bg-gray-100 text-gray-600'
+                                                ? 'bg-green-100 text-green-600'
+                                                : pizza.status === 'reject'
+                                                    ? 'bg-red-50 text-red-600'
+                                                    : 'bg-gray-100 text-gray-600'
                                                 }`}>
                                                 {pizza.status}
                                             </span>

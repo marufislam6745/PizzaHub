@@ -1,15 +1,11 @@
 import { IOrderPreview } from "@/components/OrderNow"
 import { IPizza } from "@/type"
+import { authFetch, protectedMutation } from "../core/server"
 
 
 export const createMenu = async (data: IPizza) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/addmenu`, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/addmenu`
+    const res = await protectedMutation(api, "POST", data)
     return res.json()
 }
 
@@ -47,15 +43,11 @@ export const adminDeleteMenu = async (id: string) => {
 
 //order item
 export const orderItem = async (data: IOrderPreview) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-    })
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/order`
+    const res = await protectedMutation(api, "POST", data)
     return res.json()
 }
+
 //my order delete
 export const cancelOrder = async (id: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myOrder/${id}`, {
@@ -66,7 +58,8 @@ export const cancelOrder = async (id: string) => {
 
 //vendor with customer order 
 export const customerOrder = async (id: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vendorOrder/${id}`)
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/vendorOrder/${id}`
+    const res = await authFetch(api)
     return res.json()
 }
 
@@ -112,7 +105,7 @@ export const checkoutVerify = async (sessionId: string) => {
 }
 
 //Transactions details
-export const getTransactions = async (query:string) => {
+export const getTransactions = async (query: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions?${query}`)
     return res.json()
 }
