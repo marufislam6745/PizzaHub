@@ -147,7 +147,7 @@ const TransactionsPage = async ({ searchParams }: { searchParams: Promise<{ [key
                             defaultValue={
                                 typeof search.search === "string" ? search.search : ""
                             }
-                            placeholder="Search by vendor, email, transaction..."
+                            placeholder="Search by vendor email transaction..."
                             className="min-w-0 flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-orange-400 focus:bg-white focus:ring-4 focus:ring-orange-100"
                         />
 

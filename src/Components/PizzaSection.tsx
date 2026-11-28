@@ -27,7 +27,7 @@ const PizzaSection = async () => {
                 </div>
 
                 <Link
-                    href="/#"
+                    href="/restaurants"
                     className="text-orange-500 font-semibold flex items-center gap-2 hover:gap-3 transition-all"
                 >
                     See all items <ArrowUpRight size={18} />

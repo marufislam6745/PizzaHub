@@ -114,7 +114,7 @@ const ManageMenuPage = async () => {
                                                     {pizza.title}
                                                 </h3>
                                                 <span className="font-bold text-red-500">
-                                                    ${pizza.price}
+                                                    {pizza.price}
                                                 </span>
                                             </div>
 
@@ -138,7 +138,7 @@ const ManageMenuPage = async () => {
 
                                         <button className={`rounded-lg px-4 py-2.5 text-sm font-semibold ${pizza.status === "active"
                                             ? "bg-green-50 text-green-600"
-                                            : "bg-orange-50 text-orange-500"
+                                            : (pizza.status === "reject" ? "bg-red-100 text-red-500" : 'bg-orange-50 text-orange-500')
                                             }`}>
                                             {pizza.status}
                                         </button>
