@@ -2,6 +2,7 @@
 import { customerOrder } from "@/lib/action/item";
 import { getPremiumId } from "@/lib/api/premium";
 import { auth } from "@/lib/auth";
+import { authFetch } from "@/lib/core/server";
 import { IPizza } from "@/type";
 import {
     Pizza,
@@ -28,7 +29,7 @@ export default async function VendorDashboard() {
     })
     const user = await getPremiumId(session?.user.id || '')
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${session?.user.email}`);
+    const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${session?.user.email}`);
     const myitem: IPizza[] = await res.json();
 
     const totalMenuItems = myitem.length;

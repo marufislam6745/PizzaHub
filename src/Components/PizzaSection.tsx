@@ -94,7 +94,7 @@ const PizzaSection = async () => {
 
                             {/* Button */}
                             <Link
-                                href={`/#`}
+                                href={`/restaurants/${pizza._id}`}
                                 className="mt-5 w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors"
                             >
                                 View Details

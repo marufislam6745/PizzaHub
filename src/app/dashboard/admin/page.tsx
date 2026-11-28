@@ -9,6 +9,8 @@ import {
     TrendingUp,
     ShoppingBag
 } from 'lucide-react';
+import { PaymentRecord } from './transactions/page';
+import { authFetch } from '@/lib/core/server';
 
 interface OrderItem {
     title: string,
@@ -19,11 +21,14 @@ interface OrderItem {
 
 const AdminDashboardpage = async () => {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
+    const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
     const users = await res.json()
 
     const menu = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza`)
     const item = await menu.json()
+
+    const trans = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`)
+    const action = await trans.json()
 
     // User Statistics
     const totalUsers = users.length;
@@ -42,7 +47,13 @@ const AdminDashboardpage = async () => {
         (pizza: OrderItem) => pizza.status?.toLowerCase() === "pending"
     ).length;
 
-    const totalTransactions = 125;
+    const totalTransactions = action.filter((item: PaymentRecord) => item.payment_status === "paid")
+        .reduce(
+            (total: number, item: PaymentRecord) =>
+                total + Number(item.amount || 0),
+            0
+        );
+
 
     const stats = [
         {
@@ -77,7 +88,7 @@ const AdminDashboardpage = async () => {
         },
         {
             title: "Total Transactions",
-            value: totalTransactions,
+            value: `$ ${totalTransactions}`,
             icon: Wallet,
             color: "bg-yellow-100 text-yellow-700"
         }

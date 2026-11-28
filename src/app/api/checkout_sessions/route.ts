@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
 import { stripe } from '@/lib/stripe'
-import { getSession } from '@/lib/core/server'
+import { getSession } from '@/lib/core/authfetch'
 
 export async function POST() {
 

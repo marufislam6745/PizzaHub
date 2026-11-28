@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Star } from "lucide-react";
 import Image from 'next/image';
 import OrderNow from '@/components/OrderNow';
+import { authFetch } from '@/lib/core/server';
 
 interface Props {
     params: Promise<{
@@ -11,7 +12,8 @@ interface Props {
 
 const DetailsPage = async ({ params }: Props) => {
     const { Id } = await params
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizzaId/${Id}`)
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/pizzaId/${Id}`
+    const res = await authFetch(api)
     const item = await res.json()
 
     return (

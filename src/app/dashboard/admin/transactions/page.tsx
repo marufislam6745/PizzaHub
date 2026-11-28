@@ -8,7 +8,7 @@ import {
     Receipt,
 } from "lucide-react";
 
-interface PaymentRecord {
+export interface PaymentRecord {
     _id: string;
     sessionId: string;
     status: string;

@@ -12,6 +12,7 @@ const MyOrderPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers(),
     });
+    
     const api = `${process.env.NEXT_PUBLIC_API_URL}/myOrder/${session?.user.email}`
     const res = await authFetch(api)
     const data = await res.json();

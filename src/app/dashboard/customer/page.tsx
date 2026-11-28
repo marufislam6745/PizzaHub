@@ -32,6 +32,7 @@ import {
     CalendarDays,
     MapPin,
 } from 'lucide-react';
+import { authFetch } from '@/lib/core/server';
 
 interface Order {
     _id?: string,
@@ -48,7 +49,7 @@ const CustomerDashboardPage = async () => {
         headers: await headers(),
     });
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/myOrder/${session?.user.email}`);
+    const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/myOrder/${session?.user.email}`);
     const data = await res.json();
 
     const orders: Order[] = Array.isArray(data) ? data : data.orders || [];

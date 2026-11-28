@@ -34,7 +34,7 @@ export default function AddMenuItemPage() {
             }
 
             const result = await createMenu(itemdata as IPizza)
-            console.log('hi:',result)
+        
 
             if (result) {
                 toast.success('Post a New item successfully')

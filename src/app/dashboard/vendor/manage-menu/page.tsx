@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React from 'react';
 import { Pizza, UtensilsCrossed, LocateIcon } from "lucide-react";
 import DeleteMenu from '@/components/DeleteMenu';
+import { authFetch } from '@/lib/core/server';
 
 
 const ManageMenuPage = async () => {
@@ -12,8 +13,8 @@ const ManageMenuPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     })
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pizza/${session?.user.email}`)
+    const api = `${process.env.NEXT_PUBLIC_API_URL}/pizza/${session?.user.email}`
+    const res = await authFetch(api)
     const myitem: IPizza[] = await res.json()
 
     return (
